@@ -20,6 +20,12 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
 });
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::controller(\App\Http\Controllers\API\QuestCorridorController::class)->group(function () {
+    Route::get('getQuestCorridor', 'index');
+    Route::post('addQuestCorridor', 'store');
+    Route::post('updateQuestCorridor', 'update');
+    Route::post('deleteQuestCorridor', 'delete');
 });
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
