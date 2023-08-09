@@ -40,7 +40,7 @@ class QuestCorridorController extends BaseResponseController
             $questCorridor->return = $request->return;
             $questCorridor->save();
         } catch (Exception $e) {
-            return $e->getMessage();
+            return Response($e->getMessage());
         }
         return $this->responseSuccess($questCorridor);
     }
