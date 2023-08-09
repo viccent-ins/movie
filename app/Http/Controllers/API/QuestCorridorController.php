@@ -31,7 +31,7 @@ class QuestCorridorController extends BaseResponseController
         $questCorridor = new QuestCorridor();
         try {
             if ($request->file) {
-                $address = $this->uploadHelper->fileUpload($request->file, 'assets/questCorridor/');
+                $address = $this->uploadHelper->fileUpload($request->file, 'assets/quest-corridor/');
                 $questCorridor->file = $address;
             }
             $questCorridor->level = $request->level;
