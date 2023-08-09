@@ -26,6 +26,24 @@ Route::controller(\App\Http\Controllers\API\QuestCorridorController::class)->gro
     Route::post('updateQuestCorridor', 'update');
     Route::post('deleteQuestCorridor', 'delete');
 });
+Route::controller(\App\Http\Controllers\API\ActiveMemberController::class)->group(function () {
+    Route::get('getActiveMember', 'index');
+    Route::post('addActiveMember', 'store');
+//    Route::post('updateMember', 'update');
+//    Route::post('deleteMember', 'delete');
+});
+Route::controller(\App\Http\Controllers\API\ActiveMemberController::class)->group(function () {
+    Route::get('getActiveMember', 'index');
+    Route::post('addActiveMember', 'store');
+//    Route::post('updateMember', 'update');
+//    Route::post('deleteMember', 'delete');
+});
+Route::controller(\App\Http\Controllers\API\ActiveMemberController::class)->group(function () {
+    Route::get('getActiveMember', 'index');
+    Route::post('addActiveMember', 'store');
+//    Route::post('updateMember', 'update');
+//    Route::post('deleteMember', 'delete');
+});
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
