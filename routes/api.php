@@ -44,6 +44,12 @@ Route::controller(\App\Http\Controllers\API\CooperateFilmController::class)->gro
 //    Route::post('updateMember', 'update');
 //    Route::post('deleteMember', 'delete');
 });
+Route::controller(\App\Http\Controllers\API\DetailBannerController::class)->group(function () {
+    Route::get('getBannerDetail', 'index');
+    Route::post('addBannerDetail', 'store');
+//    Route::post('updateMember', 'update');
+//    Route::post('deleteMember', 'delete');
+});
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});

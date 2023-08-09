@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,7 +32,7 @@ class BaseResponseController extends Controller
         ];
         return Response($response, 200);
     }
-    public function createdBy() {
-        return Auth::user()->name;
+    public function createdBy(): Response {
+        return Response(Auth::user()->name);
     }
 }
