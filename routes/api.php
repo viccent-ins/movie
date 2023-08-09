@@ -38,9 +38,9 @@ Route::controller(\App\Http\Controllers\API\ActiveMemberController::class)->grou
 //    Route::post('updateMember', 'update');
 //    Route::post('deleteMember', 'delete');
 });
-Route::controller(\App\Http\Controllers\API\ActiveMemberController::class)->group(function () {
-    Route::get('getActiveMember', 'index');
-    Route::post('addActiveMember', 'store');
+Route::controller(\App\Http\Controllers\API\CooperateFilmController::class)->group(function () {
+    Route::get('getCooperateFiles', 'index');
+    Route::post('addCooperateFile', 'store');
 //    Route::post('updateMember', 'update');
 //    Route::post('deleteMember', 'delete');
 });
