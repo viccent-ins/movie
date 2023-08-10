@@ -68,6 +68,12 @@ Route::controller(\App\Http\Controllers\API\InvestmentController::class)->group(
 //    Route::post('updateMember', 'update');
 //    Route::post('deleteMember', 'delete');
 });
+Route::controller(\App\Http\Controllers\API\DepositManagementController::class)->group(function () {
+    Route::post('getDeposits', 'index');
+    Route::post('addDeposit', 'store');
+//    Route::post('updateMember', 'update');
+//    Route::post('deleteMember', 'delete');
+});
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
