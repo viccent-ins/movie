@@ -50,6 +50,12 @@ Route::controller(\App\Http\Controllers\API\DetailBannerController::class)->grou
 //    Route::post('updateMember', 'update');
 //    Route::post('deleteMember', 'delete');
 });
+Route::controller(\App\Http\Controllers\API\CastController::class)->group(function () {
+    Route::get('getCasts', 'index');
+    Route::post('addCast', 'store');
+//    Route::post('updateMember', 'update');
+//    Route::post('deleteMember', 'delete');
+});
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});

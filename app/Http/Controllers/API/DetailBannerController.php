@@ -15,7 +15,7 @@ class DetailBannerController extends BaseResponseController
     {
         $this->uploadHelper = new FileHelperController();
     }
-    public function index()
+    public function index(): Response
     {
         $data = DetailBanner::orderBy('created_at', 'desc')->get();
         return $this->responseSuccess($data);
