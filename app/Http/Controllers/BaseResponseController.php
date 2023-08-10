@@ -32,7 +32,7 @@ class BaseResponseController extends Controller
         ];
         return Response($response, 200);
     }
-    public function createdBy(): Response {
-        return Response(Auth::user()->name);
+    public function createdBy() {
+        return auth()->user()->name;
     }
 }
