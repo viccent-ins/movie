@@ -13,7 +13,7 @@ class BaseResponseController extends Controller
             'ErrorCode' => $errorCode,
             'Data' => $result,
         ];
-        return Response([$response], $status);
+        return Response($response, $status);
     }
 
     public function responseFail($errorMessage, $errorCode = 1, $status = 200): Response
