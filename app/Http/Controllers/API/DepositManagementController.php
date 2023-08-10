@@ -30,7 +30,6 @@ class DepositManagementController extends BaseResponseController
             'deposit_amount' => 'required',
         ]);
         $depositMember = new DepositManagement();
-        $userName = auth()->user();
         try {
             $depositMember->deposit_name = $this->createdBy();
             $depositMember->deposit_amount = $request->deposit_amount;
