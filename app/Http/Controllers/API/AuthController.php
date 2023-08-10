@@ -19,10 +19,10 @@ class AuthController extends BaseResponseController
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|email',
+            'phone' => 'required',
             'password' => 'required|string',
         ]);
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('phone', 'password');
         $token = Auth::attempt($credentials);
         if (!$token) {
             return $this->responseUnAuthorize();
@@ -33,23 +33,25 @@ class AuthController extends BaseResponseController
     public function register(Request $request): Response
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'phone' => 'required',
+            'nick_name' => 'required|string|max:255',
             'password' => 'required|string|min:6|confirmed',
-            'email' => 'required|string|',
         ]);
-        $inputValues['email'] = $request->email;
+        $inputValues['phone'] = $request->phone;
         // checking if email exists in ‘email’ in the ‘users’ table
-        $rules = array('email' => 'unique:users,email');
+        $rules = array('phone' => 'unique:users,phone');
         $validator = Validator::make($inputValues, $rules);
 
         if ($validator->fails()) {
-            return Response(['Message' => 'The email already exists'], 200);
+            return Response(['Message' => 'The phone already exists'], 200);
         }
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role' => 'normal',
+            'phone' => $request->phone,
             'password' => bcrypt($request->password),
+            'nick_name' => $request->nick_name,
+            'email' => $request->email,
+            'referral_code' => $request->referral_code,
+            'role' => 'normal',
         ]);
         $token = Auth::login($user);
         return $this->responseToken($token);
