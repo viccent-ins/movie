@@ -17,7 +17,9 @@ class ActiveMemberFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'member_id' => 1230092,
+            'member_profit' => 20000,
+            'member_image' => 'assets/active-member/',
         ];
     }
 }
