@@ -62,6 +62,12 @@ Route::controller(\App\Http\Controllers\API\BlockBusterController::class)->group
 //    Route::post('updateMember', 'update');
 //    Route::post('deleteMember', 'delete');
 });
+Route::controller(\App\Http\Controllers\API\InvestmentController::class)->group(function () {
+    Route::get('getInvestments', 'index');
+    Route::post('addInvestment', 'store');
+//    Route::post('updateMember', 'update');
+//    Route::post('deleteMember', 'delete');
+});
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
