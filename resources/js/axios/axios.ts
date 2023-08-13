@@ -4,10 +4,11 @@ import notificationHelper from "../libraries/elementUiHelpers/notificationHelper
 import EnumMessageType from "../models/enums/enumMessageType";
 import { useStores } from '../store/store';
 import { storeToRefs } from "pinia";
-
+import { useRouter } from 'vue-router'
 export const useApiBridge = () => {
     const stores = useStores();
     const { authorisation, apiServer } = storeToRefs(stores);
+    const router = useRouter();
     const instance = axios.create({
         baseURL: `${apiServer.value}api/`,
         headers: { Authorization: `Bearer ${authorisation.value.token}`},
@@ -24,7 +25,7 @@ export const useApiBridge = () => {
                 keysToRemove.forEach((key) => {
                     localStorage.removeItem(key);
                 });
-                navigateTo('/auth/login');
+                router.push('/auth/login');
                 // window.location.href = '/auth/login';
             }
             if (error.response?.status === 500) {

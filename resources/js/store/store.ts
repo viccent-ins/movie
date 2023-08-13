@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-
 export const useStores = defineStore('store', {
     state: () => {
         return {
@@ -57,7 +56,7 @@ export const useStores = defineStore('store', {
         enabled: true,
         strategies: [
             { storage: sessionStorage },
-            // { storage: localStorage },
+            { storage: localStorage },
         ],
     }
 });
