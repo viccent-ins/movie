@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 
-
 export const useStores = defineStore('store', {
     state: () => {
         return {
@@ -12,10 +11,15 @@ export const useStores = defineStore('store', {
                 expires_in: 0,
             },
             auth: false,
+            toggleBar: false,
             server: 'http://127.0.0.1:8000/',
         }
     },
     actions: {
+        toggleSideBar() {
+            // alert(1)
+            this.toggleBar = !this.toggleBar;
+        }
         // updateLocale(lang: string) {
         //     this.locale = lang;
         // },
@@ -50,6 +54,10 @@ export const useStores = defineStore('store', {
         },
     },
     persist: {
-        enabled: true
+        enabled: true,
+        strategies: [
+            { storage: sessionStorage },
+            // { storage: localStorage },
+        ],
     }
-})
+});
