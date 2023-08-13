@@ -24,8 +24,11 @@
 
             <!-- right navbar -->
             <div class="flex items-center relative">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="fill-current mr-3 hover:text-blue-500"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
-                <img src="https://a7sas.net/wp-content/uploads/2019/07/4060.jpeg" class="w-12 h-12 rounded-full shadow-lg" @click="dropDownOpen = !dropDownOpen">
+             <el-button type="danger" @click="onLogout">
+                 <font-awesome-icon icon="arrow-right-from-bracket" size="xl"></font-awesome-icon>
+                 &nbsp;
+                 <span>Logout</span>
+             </el-button>
             </div>
 
         </div>
@@ -41,13 +44,29 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useStores } from '../store/store';
-import { storeToRefs } from "pinia";
-const stores = useStores();
-// const { toggleBar } = storeToRefs(stores);
+import {ref} from 'vue';
+import {useStores} from '../store/store';
+import api from "../libraries/api";
+import EnumApiErrorCode from "../models/enums/enumApiErrorCode";
+import notificationHelper from "../libraries/elementUiHelpers/notificationHelper";
+import EnumMessageType from "../models/enums/enumMessageType";
+import {useRouter} from "vue-router";
+
+const router = useRouter();
+    const stores = useStores();
     const dropDownOpen = ref('');
     const toggleSidebar = async () => {
         await stores.toggleSideBar();
+    };
+const onLogout = async () => {
+    const response = await api.logout();
+    if (response.ErrorCode === EnumApiErrorCode.Success) {
+        notificationHelper.notification(('Logout Success'), EnumMessageType.Success);
+        localStorage.removeItem('store');
+        window.location.href = '/';
+    } else {
+        notificationHelper.notification(('Something went wrong'), EnumMessageType.Warning);
     }
+};
+
 </script>

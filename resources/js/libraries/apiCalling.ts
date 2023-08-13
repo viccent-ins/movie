@@ -13,12 +13,10 @@ import { IChangePassword } from "../models/auth/IChangePassword";
 import IBaseResponse from "../models/IBaseResponse";
 import IResetPassword from "../models/auth/IResetPassword";
 import { useStores } from "../store/store";
-
 export default {
      async renewAxiosInstanceToken(authorisation: IAuthorisation) {
-       const stores = useStores();
+         const stores = useStores();
        await stores.updateAuthorisation(authorisation);
-       navigateTo('/profile');
     },
     login: function(request: ILogin): IAxiosPromise<ILoginResponse> {
         const response = useApiBridge().instance.post(`login`, request);

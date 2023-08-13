@@ -12,7 +12,7 @@ interface ILoginResponse {
 }
 
 interface ILogin {
-    email: string,
+    phone: string | number,
     password: string,
 }
 

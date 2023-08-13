@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { useStores } from "../store/store";
 import { storeToRefs } from "pinia";
-// const { isAuth } = storeToRefs(stores);
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -9,9 +8,8 @@ const routes: Array<RouteRecordRaw> = [
         component: () =>
             import(/* webpackChunkName: "about" */ '@/pages/index.vue'),
         beforeEnter: (to, from, next) => {
-            const stores = useStores();
-            const { auth } = storeToRefs(stores);
-            if (!auth.value) {
+            const { isAuth } = storeToRefs(useStores());
+            if (!isAuth.value) {
                 // redirect the user to the login page
                 router.push('/auth/login');
             } else {
@@ -22,14 +20,34 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/auth/login',
         name: 'login',
+        meta: { layout: 'BlankLayout' },
         component: () =>
-            import(/* webpackChunkName: "about" */ '../pages/auth/Login.vue'),
+            import(/* webpackChunkName: "about" */ '@/pages/auth/Login.vue'),
+        beforeEnter: (to, from, next) => {
+            const { isAuth } = storeToRefs(useStores());
+            if (isAuth.value) {
+                // redirect the user to the login page
+                router.push('/');
+            } else {
+                next();
+            }
+        },
     },
     {
         path: '/auth/register',
         name: 'register',
+        meta: { layout: 'BlankLayout' },
         component: () =>
-            import(/* webpackChunkName: "about" */ '@/pages/Register.vue'),
+            import(/* webpackChunkName: "about" */ '@/pages/auth/Register.vue'),
+        beforeEnter: (to, from, next) => {
+            const { isAuth } = storeToRefs(useStores());
+            if (isAuth.value) {
+                // redirect the user to the login page
+                router.push('/');
+            } else {
+                next();
+            }
+        },
     },
     // {
     //     path: '/:NotFound(.*)*',

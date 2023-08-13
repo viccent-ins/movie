@@ -1,7 +1,7 @@
 <template>
     <div class="container mx-auto p-5 mt-40">
         <div class="flex justify-center">
-            <img class="shadow rounded-full w-20 md:w-28" src="../../public/images/logo.png" alt="">
+<!--            <img class="shadow rounded-full w-20 md:w-28" src="../../public/images/logo.png" alt="">-->
         </div>
         <div class="flex justify-center">
             <div class="shadow-lg rounded-xl w-full md:w-[600px]">
@@ -42,6 +42,7 @@
 </template>
 
 <script lang="ts" setup>
+import useRegister from "../../composables/auth/useRegister";
 const {
     registerRule,
     onRegister,

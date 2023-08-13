@@ -1,5 +1,7 @@
 interface IRegisterRequest {
-    name: string,
+    nick_name: string,
+    referral_code: number | string,
+    date_of_birth: number | string,
     phone: number | string,
     email: string,
     password: string,

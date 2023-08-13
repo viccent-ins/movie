@@ -5,6 +5,7 @@ import {
     faFlag, faGlobe, faHouse, faLemon, faAppleWhole, faCarrot, faPlay,
     faPlus, faCloudArrowUp, faCartShopping, faCalendarAlt, faMoneyBillAlt,
     faDashboard, faSearch, faComputer, faArrowLeft, faImage, faTrash, faBars,
+    faArrowRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 import {
     faFacebook, faInstagram, faWhatsapp, faLinkedin,
@@ -16,6 +17,6 @@ library.add(
     faBarsStaggered, faPlay, faPlus, faCloudArrowUp,
     faCartShopping, faCalendarAlt, faMoneyBillAlt,
     faDashboard, faSearch, faComputer, faArrowLeft,
-    faImage, faTrash, faBars,
+    faImage, faTrash, faBars, faArrowRightFromBracket,
 );
 export default FontAwesomeIcon;

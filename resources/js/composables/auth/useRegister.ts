@@ -6,16 +6,20 @@ import EnumApiErrorCode from '../../models/enums/enumApiErrorCode';
 import EnumMessageType from '../../models/enums/enumMessageType';
 import useVariable from '../useVariable';
 import formHelper, { IRule } from '../../libraries/elementUiHelpers/formHelper';
-import { instance } from '../../axios/axios';
+import { useRouter } from "vue-router";
 
 export default function useRegister() {
     const { isProcessing, ruleFormRef } = useVariable();
     const registerRequest = reactive<IRegisterRequest>({
-        name: '',
+        nick_name: '',
+        phone: '',
+        date_of_birth: '',
+        referral_code: '',
         email: '',
         password: '',
         password_confirmation: '',
     });
+    const router = useRouter();
     // const { commit, state } = useStore();
     const register = async () => {
         isProcessing.value = true;
@@ -25,14 +29,14 @@ export default function useRegister() {
             // await commit('updateAuthorisation', response.Data.Authorization);
             // await commit('updateAuth', true);
             // instance.defaults.headers.Authorization = `Bearer ${state.authorisation.token}`
-            navigateTo('/')
+            router.push('/');
         } else if (response.ErrorCode === 2) {
             notificationHelper.notification('Email or password incorrect', EnumMessageType.Error);
         }
         isProcessing.value = false;
     }
     const validateName = (): string => {
-        if (!registerRequest.name) {
+        if (!registerRequest.nick_name) {
             return 'Name required!';
         }
         return '';

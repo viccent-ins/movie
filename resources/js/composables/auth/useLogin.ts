@@ -6,37 +6,36 @@ import useVariable from '../useVariable';
 import { ILogin } from '../../models/auth/ILogin'
 import notificationHelper from '../../libraries/elementUiHelpers/notificationHelper';
 import formHelper, { IRule } from '../../libraries/elementUiHelpers/formHelper';
-import { useApiBridge } from '../../axios/axios';
 import { useRouter } from "vue-router";
-const router = useRouter();
 export default function useLogin () {
     const { isProcessing, ruleFormRef } = useVariable();
     const loginRequest = reactive<ILogin>({
-        email: 'sanjohn.in@gmail.com',
-        password: '1234qwer',
+        phone: '',
+        password: '',
     });
+    const router = useRouter();
     const login = async () => {
-        isProcessing.value = true;
+        isProcessing.value = false;
         const response = await apis.login(loginRequest);
         if (response.ErrorCode === EnumApiErrorCode.Success) {
             notificationHelper.notification('Login Success!', EnumMessageType.Success);
-            await router.push('/')
+            await router.push('/');
         } else {
-            notificationHelper.notification('Email or password is incorrect', EnumMessageType.Error);
+            notificationHelper.notification('Phone or password is incorrect', EnumMessageType.Error);
         }
         isProcessing.value = false;
     };
-    const validateEmail = (): string => {
-        if (!(loginRequest.email.trim() === loginRequest.email)) {
-            return 'White space not allow';
-        }
-        // eslint-disable-next-line
-        const regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-        if (!(regexp.test(loginRequest.email.toLowerCase()))) {
-            return 'Invalid Email';
-        }
-        return '';
-    };
+    // const validateEmail = (): string => {
+    //     if (!(loginRequest.email.trim() === loginRequest.email)) {
+    //         return 'White space not allow';
+    //     }
+    //     // eslint-disable-next-line
+    //     const regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    //     if (!(regexp.test(loginRequest.email.toLowerCase()))) {
+    //         return 'Invalid Email';
+    //     }
+    //     return '';
+    // };
     const validatePassword = (): string => {
         if (!(loginRequest.password.trim() === loginRequest.password)) {
             return 'White space not allow';
@@ -44,7 +43,7 @@ export default function useLogin () {
         return '';
     };
     const rules: Record<string, IRule> = {
-        email: { customRule: validateEmail, required: true },
+        phone: { required: true },
         password: { customRule: validatePassword, required: true },
     };
     const loginRule = formHelper.getRules(rules);
