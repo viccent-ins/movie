@@ -19,6 +19,7 @@ return new class extends Migration
             $table->smallInteger('ban_minute');
             $table->string('ban_file');
             $table->string('ban_bg_file');
+            $table->longText('ban_summery');
             $table->timestamps();
         });
     }
