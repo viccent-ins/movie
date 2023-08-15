@@ -13,6 +13,7 @@ import { IChangePassword } from "../models/auth/IChangePassword";
 import IBaseResponse from "../models/IBaseResponse";
 import IResetPassword from "../models/auth/IResetPassword";
 import { useStores } from "../store/store";
+import { IQuestCorridor, IQuestCorridorResponse } from "../models/home/IHome";
 export default {
      async renewAxiosInstanceToken(authorisation: IAuthorisation) {
          const stores = useStores();
@@ -26,21 +27,9 @@ export default {
         const response = useApiBridge().instance.post(`register`, request);
         return response;
     },
-   updateUser(request: IUpdateUser): IAxiosPromise<IRegisterResponse> {
-        const response = useApiBridge().instance.post(`updateProfile`, request);
-        return response;
-    },
     changePassword: function(request: IChangePassword): IAxiosPromise<IBaseResponse> {
       const response = useApiBridge().instance.post(`changePassword`, request);
       return response;
-    },
-    registerWithFacebook(request: IFacebookRegister): IAxiosPromise<ILoginResponse> {
-        const response = useApiBridge().instance.post(`registerWithFacebook`, request);
-        return response;
-    },
-    registerWithGoogle(request: IGoogleRegister): IAxiosPromise<ILoginResponse> {
-        const response = useApiBridge().instance.post(`registerWithGoogle`, request);
-        return response;
     },
     logout(): IAxiosPromise<IApiResponse> {
         const response = useApiBridge().instance.post(`logout`);
@@ -76,4 +65,22 @@ export default {
       const response = useApiBridge().instance.post(`reset-password`, param);
       return response;
    },
+    addQuestCorridor(param: IQuestCorridor): IAxiosPromise<IQuestCorridorResponse> {
+      const response = useApiBridge().instance.post('addQuestCorridor', param);
+      return response;
+   },
+    questCorridors(): IAxiosPromise<IQuestCorridorResponse> {
+      const response = useApiBridge().instance.get('getQuestCorridor');
+      return response;
+   },
+    updateQuestCorridor(param: IQuestCorridor): IAxiosPromise<IQuestCorridorResponse> {
+        const response = useApiBridge().instance.post(`updateQuestCorridor`, param);
+        return response;
+    },
+    deleteQuestCorridor(id: number): IAxiosPromise<IQuestCorridorResponse> {
+        const response = useApiBridge().instance.post(`deleteQuestCorridor`, {
+            id: id
+        });
+        return response;
+    },
 };

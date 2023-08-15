@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "@fortawesome/vue-fontawesome": "^3.0.3",
+        "browser-image-compression": "^2.0.2",
         "element-plus": "^2.3.9",
         "moment": "^2.29.4",
         "pinia": "^2.0.0-rc.10",

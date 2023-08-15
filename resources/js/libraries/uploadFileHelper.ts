@@ -1,4 +1,5 @@
 import { ElMessage, genFileId, UploadInstance, UploadProps, UploadRawFile } from 'element-plus';
+import { ref, reactive } from 'vue';
 // @ts-ignore
 import imageCompression from 'browser-image-compression';
 const upload = ref<UploadInstance>();

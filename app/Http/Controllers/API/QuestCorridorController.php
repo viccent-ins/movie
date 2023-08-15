@@ -18,7 +18,10 @@ class QuestCorridorController extends BaseResponseController
     public function index(): Response
     {
         $data = QuestCorridor::orderBy('created_at', 'desc')->get();
-        return $this->responseSuccess($data);
+        $Result = [
+            'QuestCorridor' => $data,
+        ];
+        return $this->responseSuccess($Result);
     }
     public function store(Request $request): Response
     {
@@ -43,5 +46,43 @@ class QuestCorridorController extends BaseResponseController
             return Response($e->getMessage());
         }
         return $this->responseSuccess($questCorridor);
+    }
+    public function update(Request $request): Response
+    {
+        $request->validate([
+            'level' => 'required',
+            'amount' => 'required',
+            'percentage' => 'required',
+            'return' => 'required',
+        ]);
+        $questCorridor = QuestCorridor::findOrfail($request->id);
+        try {
+            if ($request->file) {
+                $address = $this->uploadHelper->fileUpload($request->file, 'assets/quest-corridor/');
+                $questCorridor->file = $address;
+            }
+            $questCorridor->level = $request->level;
+            $questCorridor->amount = $request->amount;
+            $questCorridor->percentage = $request->percentage;
+            $questCorridor->return = $request->return;
+            $questCorridor->update();
+        } catch (Exception $e) {
+            return Response($e->getMessage());
+        }
+        $Result = [
+            'QuestCorridor' => $questCorridor,
+        ];
+        return $this->responseSuccess($Result);
+    }
+    public function delete(Request $request) {
+        $questCorridor = QuestCorridor::where('id',$request->id)->first();
+        $photo = $questCorridor->file;
+        if($photo){
+            $questCorridor->delete();
+            unlink(public_path($photo));
+        } else {
+            $questCorridor->delete();
+        }
+        return $this->responseSuccess(null);
     }
 }

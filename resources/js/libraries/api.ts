@@ -7,6 +7,7 @@ import IBaseResponse from '../models/IBaseResponse';
 import { IProfile, IUpdateUser, IUserResponse, IUserWithPaginate } from "../models/auth/IUser";
 import { IChangePassword } from "../models/auth/IChangePassword";
 import IResetPassword from "../models/auth/IResetPassword";
+import { IQuestCorridor, IQuestCorridorResponse } from "../models/home/IHome";
 
 const getResponse = (response: IAxiosPromise) => response.then((value) => new ApiResponse(value.data)).catch((error) => new ApiResponse(error.data));
 export default {
@@ -50,6 +51,22 @@ export default {
     },
     resetPassword(param: IResetPassword): Promise<ApiResponse<IBaseResponse>> {
       const response = apiCalling.resetPassword(param);
+      return getResponse(response);
+    },
+    addQuestCorridor(param: IQuestCorridor): Promise<ApiResponse<IQuestCorridorResponse>> {
+      const response = apiCalling.addQuestCorridor(param);
+      return getResponse(response);
+    },
+    questCorridors(): Promise<ApiResponse<IQuestCorridorResponse>> {
+      const response = apiCalling.questCorridors();
+      return getResponse(response);
+    },
+    updateQuestCorridor(param: IQuestCorridor): Promise<ApiResponse<IQuestCorridorResponse>> {
+      const response = apiCalling.updateQuestCorridor(param);
+      return getResponse(response);
+    },
+    deleteQuestCorridor(id: number): Promise<ApiResponse<IBaseResponse>> {
+      const response = apiCalling.deleteQuestCorridor(id);
       return getResponse(response);
     },
 };

@@ -21,7 +21,7 @@ const useVariable = () => {
           await func();
           return true;
       } else {
-          notificationHelper.notification('មានការមិនប្រក្រតី', EnumMessageType.Error);
+          notificationHelper.notification('something went wrong', EnumMessageType.Error);
           return false
       }
   }
