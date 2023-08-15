@@ -7,7 +7,7 @@ import IBaseResponse from '../models/IBaseResponse';
 import { IProfile, IUpdateUser, IUserResponse, IUserWithPaginate } from "../models/auth/IUser";
 import { IChangePassword } from "../models/auth/IChangePassword";
 import IResetPassword from "../models/auth/IResetPassword";
-import { IQuestCorridor, IQuestCorridorResponse } from "../models/home/IHome";
+import { IActiveMember, IActiveMemberResponse, IQuestCorridor, IQuestCorridorResponse } from "../models/home/IHome";
 
 const getResponse = (response: IAxiosPromise) => response.then((value) => new ApiResponse(value.data)).catch((error) => new ApiResponse(error.data));
 export default {
@@ -57,8 +57,8 @@ export default {
       const response = apiCalling.addQuestCorridor(param);
       return getResponse(response);
     },
-    questCorridors(): Promise<ApiResponse<IQuestCorridorResponse>> {
-      const response = apiCalling.questCorridors();
+    questCorridor(): Promise<ApiResponse<IQuestCorridorResponse>> {
+      const response = apiCalling.questCorridor();
       return getResponse(response);
     },
     updateQuestCorridor(param: IQuestCorridor): Promise<ApiResponse<IQuestCorridorResponse>> {
@@ -68,5 +68,21 @@ export default {
     deleteQuestCorridor(id: number): Promise<ApiResponse<IBaseResponse>> {
       const response = apiCalling.deleteQuestCorridor(id);
       return getResponse(response);
+    },
+    addActiveMember(param: IActiveMember): Promise<ApiResponse<IActiveMemberResponse>> {
+        const response = apiCalling.addActiveMember(param);
+        return getResponse(response);
+    },
+    activeMember(): Promise<ApiResponse<IActiveMemberResponse>> {
+        const response = apiCalling.activeMember();
+        return getResponse(response);
+    },
+    updateActiveMember(param: IActiveMember): Promise<ApiResponse<IActiveMemberResponse>> {
+        const response = apiCalling.updateActiveMember(param);
+        return getResponse(response);
+    },
+    deleteActiveMember(id: number): Promise<ApiResponse<IActiveMemberResponse>> {
+        const response = apiCalling.deleteActiveMember(id);
+        return getResponse(response);
     },
 };

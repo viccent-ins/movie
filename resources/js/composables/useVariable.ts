@@ -10,13 +10,12 @@ const useVariable = () => {
   const ruleFormRef = ref<FormInstance>();
   const dialog = ref( false );
   const resetForm = (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    formEl.resetFields()
+      if (!formEl) return
+      formEl.resetFields()
   };
   const saveResponse = async (response: any, func: () => void) => {
       if (response.ErrorCode === EnumApiErrorCode.Success) {
           notificationHelper.notification('រួចរាល់', EnumMessageType.Success);
-          resetForm(ruleFormRef.value);
           dialog.value = false;
           await func();
           return true;

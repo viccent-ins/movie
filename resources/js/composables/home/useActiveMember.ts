@@ -1,5 +1,5 @@
-import { IQuestCorridor } from "../../models/home/IHome";
-import { reactive, ref, computed } from 'vue';
+import { ActiveMember, IActiveMember } from "../../models/home/IHome";
+import { reactive, computed } from 'vue';
 import api from "../../libraries/api";
 import formHelper from '../../libraries/elementUiHelpers/formHelper';
 import EnumApiErrorCode from "../../models/enums/enumApiErrorCode";
@@ -8,7 +8,7 @@ import uploadFileHelper from '../../libraries/uploadFileHelper';
 import { useStores } from '../../store/store';
 import messageBoxHelper from "../../libraries/elementUiHelpers/messageBoxHelper";
 import EnumMessageType from "../../models/enums/enumMessageType";
-export default function useHome() {
+export default function useActiveMember() {
     const {
         isLoading,
         dialog,
@@ -21,29 +21,27 @@ export default function useHome() {
         handleChange, handleRemove, renderFile,
     } = uploadFileHelper;
     const dataPagination = reactive({
-        QuestCorridors: <IQuestCorridor[]>([]),
+        ActiveMembers: <IActiveMember[]>([]),
         CurrentPage: 1,
         PageSize: 10,
         Search: '',
         Total: 0,
     });
     const { apiServer } = useStores();
-    const getQuestCorridor = async () => {
+    const getActiveMember = async () => {
         isLoading.value = true;
-        const response = await api.questCorridor();
+        const response = await api.activeMember();
         if (response.ErrorCode === EnumApiErrorCode.Success) {
-            dataPagination.QuestCorridors = response.Data.QuestCorridor;
+            dataPagination.ActiveMembers = response.Data.ActiveMembers.map((item: IActiveMember) => new ActiveMember(item));
         }
         isLoading.value = false;
     };
-    getQuestCorridor();
-    const questForm = reactive<IQuestCorridor>({
+    getActiveMember();
+    const activeForm = reactive<IActiveMember>({
         id: 0,
-        level: '',
-        amount: null,
-        percentage: '',
-        return: '',
-        file: '',
+        member_id: null,
+        member_profit: '',
+        member_image: '',
     });
     const rules = {
         level: { required: true },
@@ -53,12 +51,10 @@ export default function useHome() {
     };
     const formRule = formHelper.getRules(rules);
     const reset = () => {
-        questForm.id = 0;
-        questForm.level = '';
-        questForm.amount = null;
-        questForm.return = '';
-        questForm.percentage = '';
-        questForm.file = '';
+        activeForm.id = 0;
+        activeForm.member_id = null;
+        activeForm.member_profit = '';
+        activeForm.member_image = '';
 
     };
     const handleClose = () => {
@@ -67,49 +63,40 @@ export default function useHome() {
         file.value = '';
         dialog.value = !dialog.value;
     };
-    const onAdd = () => {
-        handleClose();
-    }
     const save = async () => {
         isLoading.value = true;
         await renderFile();
-        const request: IQuestCorridor = {
-            id: questForm.id,
-            level: questForm.level,
-            amount: questForm.amount,
-            percentage: questForm.percentage,
-            return: questForm.return,
-            file: file.value,
+        const request: IActiveMember = {
+            id: activeForm.id,
+            member_id: activeForm.member_id,
+            member_profit: activeForm.member_profit,
+            member_image: file.value,
         }
-        const response = questForm.id === 0 ? await api.addQuestCorridor(request) : await api.updateQuestCorridor(request);
-        await saveResponse(response, getQuestCorridor);
-        handleClose();
+        const response = activeForm.id === 0 ? await api.addActiveMember(request) : await api.updateActiveMember(request);
+        await saveResponse(response, getActiveMember);
         isLoading.value = false;
     };
     const onSubmit = formHelper.getSubmitFunction(save);
-    const onEdit = (item: IQuestCorridor) => {
+    const onEdit = (item: IActiveMember) => {
         dialog.value = true;
-        questForm.id = item.id;
-        questForm.level = item.level;
-        questForm.amount = item.amount;
-        questForm.percentage = item.percentage;
-        questForm.return = item.return;
-        questForm.file = item.file;
+        activeForm.id = item.id;
+        activeForm.member_id = item.member_id;
+        activeForm.member_profit = item.member_profit;
     };
     const deleteProcess = async () => {
-        const response = await api.deleteQuestCorridor(questForm.id)
-        await saveResponse(response, getQuestCorridor)
+        const response = await api.deleteActiveMember(activeForm.id)
+        await saveResponse(response, getActiveMember)
     };
     const onDelete = (id: number) => {
-        questForm.id = id;
+        activeForm.id = id;
         messageBoxHelper.confirm(EnumMessageType.Warning, deleteProcess)
     };
     const filterSearchPagination = computed(() => {
-        return dataPagination.QuestCorridors.slice(dataPagination.PageSize * dataPagination.CurrentPage - dataPagination.PageSize, dataPagination.PageSize * dataPagination.CurrentPage)
-            .filter((data) => !dataPagination.Search || data.level.toLowerCase().includes(dataPagination.Search.toLowerCase()));
+        return dataPagination.ActiveMembers.slice(dataPagination.PageSize * dataPagination.CurrentPage - dataPagination.PageSize, dataPagination.PageSize * dataPagination.CurrentPage)
+            // @ts-ignore
+            .filter((data) => !dataPagination.Search || data.displayMemberId.toLowerCase().includes(dataPagination.Search.toLowerCase()));
     });
     return {
-        onAdd,
         isLoading,
         apiServer,
         onSubmit,
@@ -117,7 +104,7 @@ export default function useHome() {
         onDelete,
         dialog,
         handleClose,
-        questForm,
+        activeForm,
         formRule,
         ruleFormRef,
         upload,

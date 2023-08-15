@@ -29,14 +29,8 @@ Route::controller(\App\Http\Controllers\API\QuestCorridorController::class)->gro
 Route::controller(\App\Http\Controllers\API\ActiveMemberController::class)->group(function () {
     Route::get('getActiveMember', 'index');
     Route::post('addActiveMember', 'store');
-//    Route::post('updateMember', 'update');
-//    Route::post('deleteMember', 'delete');
-});
-Route::controller(\App\Http\Controllers\API\ActiveMemberController::class)->group(function () {
-    Route::get('getActiveMember', 'index');
-    Route::post('addActiveMember', 'store');
-//    Route::post('updateMember', 'update');
-//    Route::post('deleteMember', 'delete');
+    Route::post('updateActiveMember', 'update');
+    Route::post('deleteActiveMember', 'delete');
 });
 Route::controller(\App\Http\Controllers\API\CooperateFilmController::class)->group(function () {
     Route::get('getCooperateFiles', 'index');

@@ -7,9 +7,33 @@ interface IQuestCorridor {
     return: string,
 }
 interface IQuestCorridorResponse {
-    QuestCorridor: IQuestCorridor[]
+    QuestCorridor: IQuestCorridor[],
+}
+interface IActiveMember {
+    id: number,
+    member_id: number| null,
+    member_profit: string,
+    member_image: string,
+}
+class ActiveMember implements IActiveMember {
+    id: number;
+    member_id: number| null;
+    member_profit: string;
+    member_image: string;
+    get displayMemberId() {
+        return String(this.member_id);
+    };
+    constructor(init: IActiveMember) {
+        Object.assign(this, init);
+    }
+}
+interface IActiveMemberResponse {
+    ActiveMembers: IActiveMember[],
 }
 export {
     IQuestCorridor,
     IQuestCorridorResponse,
+    IActiveMember,
+    IActiveMemberResponse,
+    ActiveMember,
 };

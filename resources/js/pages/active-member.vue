@@ -1,22 +1,20 @@
 <template>
     <div >
         <div class="flex justify-end mb-5">
-            <el-button type="primary" @click="onAdd">
+            <el-button type="primary" @click="dialog = !dialog">
                 <font-awesome-icon icon="plus"/> &nbsp; Add</el-button>
         </div>
         <el-table :data="filterSearchPagination" style="width: 100%" v-loading="isLoading">
             <el-table-column label="image" >
                 <template #default="prop">
-                    <img :src="apiServer + prop.row.file" width="60" alt="loading...">
+                    <img :src="apiServer + prop.row.member_image" width="60" alt="loading...">
                 </template>
             </el-table-column>
-            <el-table-column label="level" prop="level" />
-            <el-table-column label="amount" prop="amount" />
-            <el-table-column label="percentage" prop="percentage" />
-            <el-table-column label="return" prop="return" />
+            <el-table-column label="Member Id" prop="displayMemberId" />
+            <el-table-column label="Member Profit" prop="member_profit" />
             <el-table-column align="right">
                 <template #header>
-                    <el-input v-model="dataPagination.Search"  placeholder="Type to search" />
+                    <el-input v-model="dataPagination.Search" type="number" placeholder="Type to search" />
                 </template>
                 <template #default="scope">
                     <el-button type="warning" size="small" @click="onEdit(scope.row)"
@@ -38,35 +36,29 @@
                 :page-sizes="[10, 25, 50, 75, 100]"
                 small="small"
                 layout="sizes, prev, pager, next"
-                :total="dataPagination.QuestCorridors.length"/>
+                :total="dataPagination.ActiveMembers.length"/>
             <div class="md:text-2xl text-lg">
-<!--                សរុប៖ &nbsp;<span class="danger">{{ dataPagination.Total }} B</span>-->
+                <!--                សរុប៖ &nbsp;<span class="danger">{{ dataPagination.Total }} B</span>-->
             </div>
         </div>
         <el-dialog
             v-model="dialog"
-            title="Quest Corridor"
+            title="Active Member"
             width="30%"
             :before-close="handleClose"
         >
             <el-form
                 :label-position="'top'"
                 label-width="100px"
-                :model="questForm"
+                :model="activeForm"
                 :rules="formRule"
                 ref="ruleFormRef"
             >
-                <el-form-item :label="$t('Level')" prop="level">
-                    <el-input v-model="questForm.level"/>
+                <el-form-item label="Active Member" prop="member_id">
+                    <el-input v-model="activeForm.member_id"/>
                 </el-form-item>
-                <el-form-item :label="$t('amount')" prop="amount">
-                    <el-input v-model="questForm.amount"/>
-                </el-form-item>
-                <el-form-item :label="$t('Percentage')" prop="percentage">
-                    <el-input v-model="questForm.percentage"/>
-                </el-form-item>
-                <el-form-item :label="$t('Return')" prop="return">
-                    <el-input v-model="questForm.return"/>
+                <el-form-item label="Member Profit" prop="member_profit">
+                    <el-input v-model="activeForm.member_profit"/>
                 </el-form-item>
                 <el-form-item>
                     <el-upload
@@ -85,27 +77,28 @@
                 </el-form-item>
 
             </el-form>
+
             <template #footer>
-              <span class="dialog-footer">
-                <el-button type="primary" :loading="isLoading" @click="onSubmit(ruleFormRef)">
-                  Save
-                </el-button>
-              </span>
+      <span class="dialog-footer">
+        <el-button type="primary" @click="onSubmit(ruleFormRef)" :loading="isLoading">
+          Save
+        </el-button>
+      </span>
             </template>
         </el-dialog>
     </div>
 </template>
 <script setup lang="ts">
-import useHome from "../composables/home/useHome";
+import useActiveMember from "../composables/home/useActiveMember";
 const {
-    onAdd,
+    filterSearchPagination,
+    activeForm,
     isLoading,
     apiServer,
     onEdit,
     onDelete,
     dialog,
     handleClose,
-    questForm,
     formRule,
     onSubmit,
     ruleFormRef,
@@ -113,7 +106,6 @@ const {
     handleChange,
     handleExceed,
     handleRemove,
-    filterSearchPagination,
     dataPagination,
-} = useHome();
+} = useActiveMember();
 </script>

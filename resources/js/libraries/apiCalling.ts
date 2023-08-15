@@ -13,7 +13,7 @@ import { IChangePassword } from "../models/auth/IChangePassword";
 import IBaseResponse from "../models/IBaseResponse";
 import IResetPassword from "../models/auth/IResetPassword";
 import { useStores } from "../store/store";
-import { IQuestCorridor, IQuestCorridorResponse } from "../models/home/IHome";
+import { IActiveMember, IActiveMemberResponse, IQuestCorridor, IQuestCorridorResponse } from "../models/home/IHome";
 export default {
      async renewAxiosInstanceToken(authorisation: IAuthorisation) {
          const stores = useStores();
@@ -69,7 +69,7 @@ export default {
       const response = useApiBridge().instance.post('addQuestCorridor', param);
       return response;
    },
-    questCorridors(): IAxiosPromise<IQuestCorridorResponse> {
+    questCorridor(): IAxiosPromise<IQuestCorridorResponse> {
       const response = useApiBridge().instance.get('getQuestCorridor');
       return response;
    },
@@ -79,6 +79,24 @@ export default {
     },
     deleteQuestCorridor(id: number): IAxiosPromise<IQuestCorridorResponse> {
         const response = useApiBridge().instance.post(`deleteQuestCorridor`, {
+            id: id
+        });
+        return response;
+    },
+    addActiveMember(param: IActiveMember): IAxiosPromise<IActiveMemberResponse> {
+        const response = useApiBridge().instance.post('addActiveMember', param);
+        return response;
+    },
+    activeMember(): IAxiosPromise<IActiveMemberResponse> {
+        const response = useApiBridge().instance.get('getActiveMember');
+        return response;
+    },
+    updateActiveMember(param: IActiveMember): IAxiosPromise<IActiveMemberResponse> {
+        const response = useApiBridge().instance.post('updateActiveMember', param);
+        return response;
+    },
+    deleteActiveMember(id: number): IAxiosPromise<IActiveMemberResponse> {
+        const response = useApiBridge().instance.post('deleteActiveMember', {
             id: id
         });
         return response;

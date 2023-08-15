@@ -8,9 +8,11 @@
         "sourceMap": true,
         "resolveJsonModule": true,
         "esModuleInterop": true,
+        "strictPropertyInitialization": false,
         "lib": [
             "esnext",
-            "dom"
+            "dom",
+            "es7"
         ],
         "plugins": [
             {
