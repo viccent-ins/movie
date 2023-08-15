@@ -43,7 +43,10 @@ class ActiveMemberController extends BaseResponseController
         } catch (Exception $e) {
             return Response($e->getMessage());
         }
-        return $this->responseSuccess($member);
+        $Result = [
+            'ActiveMembers' => $member,
+        ];
+        return $this->responseSuccess($Result);
     }
     public function update(Request $request): Response
     {

@@ -67,9 +67,6 @@ export default function useHome() {
         file.value = '';
         dialog.value = !dialog.value;
     };
-    const onAdd = () => {
-        handleClose();
-    }
     const save = async () => {
         isLoading.value = true;
         await renderFile();
@@ -83,7 +80,7 @@ export default function useHome() {
         }
         const response = questForm.id === 0 ? await api.addQuestCorridor(request) : await api.updateQuestCorridor(request);
         await saveResponse(response, getQuestCorridor);
-        handleClose();
+        upload.value?.clearFiles();
         isLoading.value = false;
     };
     const onSubmit = formHelper.getSubmitFunction(save);
@@ -109,7 +106,6 @@ export default function useHome() {
             .filter((data) => !dataPagination.Search || data.level.toLowerCase().includes(dataPagination.Search.toLowerCase()));
     });
     return {
-        onAdd,
         isLoading,
         apiServer,
         onSubmit,

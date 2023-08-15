@@ -13,7 +13,13 @@ import { IChangePassword } from "../models/auth/IChangePassword";
 import IBaseResponse from "../models/IBaseResponse";
 import IResetPassword from "../models/auth/IResetPassword";
 import { useStores } from "../store/store";
-import { IActiveMember, IActiveMemberResponse, IQuestCorridor, IQuestCorridorResponse } from "../models/home/IHome";
+import {
+    IActiveMember,
+    IActiveMemberResponse, ICooperateFilm,
+    ICooperateFilmResponse,
+    IQuestCorridor,
+    IQuestCorridorResponse
+} from "../models/home/IHome";
 export default {
      async renewAxiosInstanceToken(authorisation: IAuthorisation) {
          const stores = useStores();
@@ -97,6 +103,24 @@ export default {
     },
     deleteActiveMember(id: number): IAxiosPromise<IActiveMemberResponse> {
         const response = useApiBridge().instance.post('deleteActiveMember', {
+            id: id
+        });
+        return response;
+    },
+    cooperateFilm(): IAxiosPromise<ICooperateFilmResponse> {
+        const response = useApiBridge().instance.get('getCooperateFilms');
+        return response;
+    },
+    addCooperateFilm(param: ICooperateFilm): IAxiosPromise<ICooperateFilmResponse> {
+        const response = useApiBridge().instance.post('addCooperateFilm', param);
+        return response;
+    },
+    updateCooperateFilm(param: ICooperateFilm): IAxiosPromise<ICooperateFilmResponse> {
+        const response = useApiBridge().instance.post('updateCooperateFilm', param);
+        return response;
+    },
+    deleteCooperateFilm(id: number): IAxiosPromise<ICooperateFilmResponse> {
+        const response = useApiBridge().instance.post('deleteCooperateFilm', {
             id: id
         });
         return response;

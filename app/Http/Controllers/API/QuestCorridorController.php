@@ -45,7 +45,10 @@ class QuestCorridorController extends BaseResponseController
         } catch (Exception $e) {
             return Response($e->getMessage());
         }
-        return $this->responseSuccess($questCorridor);
+        $Result = [
+            'ActiveMembers' => $questCorridor,
+        ];
+        return $this->responseSuccess($Result);
     }
     public function update(Request $request): Response
     {

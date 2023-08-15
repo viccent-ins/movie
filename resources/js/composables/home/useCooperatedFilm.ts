@@ -1,4 +1,4 @@
-import { ActiveMember, IActiveMember } from "../../models/home/IHome";
+import { ActiveMember, IActiveMember, ICooperateFilm } from "../../models/home/IHome";
 import { reactive, computed } from 'vue';
 import api from "../../libraries/api";
 import formHelper from '../../libraries/elementUiHelpers/formHelper';
@@ -8,11 +8,10 @@ import uploadFileHelper from '../../libraries/uploadFileHelper';
 import { useStores } from '../../store/store';
 import messageBoxHelper from "../../libraries/elementUiHelpers/messageBoxHelper";
 import EnumMessageType from "../../models/enums/enumMessageType";
-export default function useActiveMember() {
+export default function useCooperatedFilm() {
     const {
         isLoading,
         dialog,
-        resetForm,
         ruleFormRef,
         saveResponse,
     } = useVariable();
@@ -21,27 +20,25 @@ export default function useActiveMember() {
         handleChange, handleRemove, renderFile,
     } = uploadFileHelper;
     const dataPagination = reactive({
-        ActiveMembers: <IActiveMember[]>([]),
+        CooperateFilms: <ICooperateFilm[]>([]),
         CurrentPage: 1,
         PageSize: 10,
         Search: '',
         Total: 0,
     });
     const { apiServer } = useStores();
-    const getActiveMember = async () => {
+    const getCooperateFilm = async () => {
         isLoading.value = true;
-        const response = await api.activeMember();
+        const response = await api.cooperateFilm();
         if (response.ErrorCode === EnumApiErrorCode.Success) {
-            dataPagination.ActiveMembers = response.Data.ActiveMembers.map((item: IActiveMember) => new ActiveMember(item));
+            dataPagination.CooperateFilms = response.Data.CooperateFilms;
         }
         isLoading.value = false;
     };
-    getActiveMember();
-    const activeForm = reactive<IActiveMember>({
+    getCooperateFilm();
+    const cooperateForm = reactive<ICooperateFilm>({
         id: 0,
-        member_id: null,
-        member_profit: '',
-        member_image: '',
+        cooperate_file: '',
     });
     const rules = {
         level: { required: true },
@@ -51,11 +48,8 @@ export default function useActiveMember() {
     };
     const formRule = formHelper.getRules(rules);
     const reset = () => {
-        activeForm.id = 0;
-        activeForm.member_id = null;
-        activeForm.member_profit = '';
-        activeForm.member_image = '';
-
+        cooperateForm.id = 0;
+        cooperateForm.cooperate_file = '';
     };
     const handleClose = () => {
         reset();
@@ -66,36 +60,30 @@ export default function useActiveMember() {
     const save = async () => {
         isLoading.value = true;
         await renderFile();
-        const request: IActiveMember = {
-            id: activeForm.id,
-            member_id: activeForm.member_id,
-            member_profit: activeForm.member_profit,
-            member_image: file.value,
+        const request: ICooperateFilm = {
+            id: cooperateForm.id,
+            cooperate_file: file.value,
         }
-        const response = activeForm.id === 0 ? await api.addActiveMember(request) : await api.updateActiveMember(request);
-        await saveResponse(response, getActiveMember);
+        const response = cooperateForm.id === 0 ? await api.addCooperateFilm(request) : await api.updateCooperateFilm(request);
+        await saveResponse(response, getCooperateFilm);
         upload.value?.clearFiles();
         isLoading.value = false;
     };
     const onSubmit = formHelper.getSubmitFunction(save);
     const onEdit = (item: IActiveMember) => {
         dialog.value = true;
-        activeForm.id = item.id;
-        activeForm.member_id = item.member_id;
-        activeForm.member_profit = item.member_profit;
+        cooperateForm.id = item.id;
     };
     const deleteProcess = async () => {
-        const response = await api.deleteActiveMember(activeForm.id)
-        await saveResponse(response, getActiveMember)
+        const response = await api.deleteCooperateFilm(cooperateForm.id)
+        await saveResponse(response, getCooperateFilm)
     };
     const onDelete = (id: number) => {
-        activeForm.id = id;
+        cooperateForm.id = id;
         messageBoxHelper.confirm(EnumMessageType.Warning, deleteProcess)
     };
     const filterSearchPagination = computed(() => {
-        return dataPagination.ActiveMembers.slice(dataPagination.PageSize * dataPagination.CurrentPage - dataPagination.PageSize, dataPagination.PageSize * dataPagination.CurrentPage)
-            // @ts-ignore
-            .filter((data) => !dataPagination.Search || data.displayMemberId.toLowerCase().includes(dataPagination.Search.toLowerCase()));
+        return dataPagination.CooperateFilms.slice(dataPagination.PageSize * dataPagination.CurrentPage - dataPagination.PageSize, dataPagination.PageSize * dataPagination.CurrentPage);
     });
     return {
         isLoading,
@@ -105,7 +93,7 @@ export default function useActiveMember() {
         onDelete,
         dialog,
         handleClose,
-        activeForm,
+        cooperateForm,
         formRule,
         ruleFormRef,
         upload,

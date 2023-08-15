@@ -7,7 +7,13 @@ import IBaseResponse from '../models/IBaseResponse';
 import { IProfile, IUpdateUser, IUserResponse, IUserWithPaginate } from "../models/auth/IUser";
 import { IChangePassword } from "../models/auth/IChangePassword";
 import IResetPassword from "../models/auth/IResetPassword";
-import { IActiveMember, IActiveMemberResponse, IQuestCorridor, IQuestCorridorResponse } from "../models/home/IHome";
+import {
+    IActiveMember,
+    IActiveMemberResponse,
+    ICooperateFilm, ICooperateFilmResponse,
+    IQuestCorridor,
+    IQuestCorridorResponse
+} from "../models/home/IHome";
 
 const getResponse = (response: IAxiosPromise) => response.then((value) => new ApiResponse(value.data)).catch((error) => new ApiResponse(error.data));
 export default {
@@ -83,6 +89,22 @@ export default {
     },
     deleteActiveMember(id: number): Promise<ApiResponse<IActiveMemberResponse>> {
         const response = apiCalling.deleteActiveMember(id);
+        return getResponse(response);
+    },
+    cooperateFilm(): Promise<ApiResponse<ICooperateFilmResponse>> {
+        const response = apiCalling.cooperateFilm();
+        return getResponse(response);
+    },
+    addCooperateFilm(param: ICooperateFilm): Promise<ApiResponse<ICooperateFilmResponse>> {
+        const response = apiCalling.addCooperateFilm(param);
+        return getResponse(response);
+    },
+    updateCooperateFilm(param: ICooperateFilm): Promise<ApiResponse<ICooperateFilmResponse>> {
+        const response = apiCalling.updateCooperateFilm(param);
+        return getResponse(response);
+    },
+    deleteCooperateFilm(id: number): Promise<ApiResponse<ICooperateFilmResponse>> {
+        const response = apiCalling.deleteCooperateFilm(id);
         return getResponse(response);
     },
 };

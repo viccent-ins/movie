@@ -30,10 +30,19 @@ class ActiveMember implements IActiveMember {
 interface IActiveMemberResponse {
     ActiveMembers: IActiveMember[],
 }
+interface ICooperateFilm {
+    id: number,
+    cooperate_file: string,
+}
+interface ICooperateFilmResponse {
+    CooperateFilms: ICooperateFilm[],
+}
 export {
     IQuestCorridor,
     IQuestCorridorResponse,
     IActiveMember,
     IActiveMemberResponse,
     ActiveMember,
+    ICooperateFilm,
+    ICooperateFilmResponse,
 };

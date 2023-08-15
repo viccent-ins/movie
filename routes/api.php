@@ -33,10 +33,10 @@ Route::controller(\App\Http\Controllers\API\ActiveMemberController::class)->grou
     Route::post('deleteActiveMember', 'delete');
 });
 Route::controller(\App\Http\Controllers\API\CooperateFilmController::class)->group(function () {
-    Route::get('getCooperateFiles', 'index');
-    Route::post('addCooperateFile', 'store');
-//    Route::post('updateMember', 'update');
-//    Route::post('deleteMember', 'delete');
+    Route::get('getCooperateFilms', 'index');
+    Route::post('addCooperateFilm', 'store');
+    Route::post('updateCooperateFilm', 'update');
+    Route::post('deleteCooperateFilm', 'delete');
 });
 Route::controller(\App\Http\Controllers\API\DetailBannerController::class)->group(function () {
     Route::get('getBannerDetail', 'index');
